@@ -2,7 +2,7 @@ pipeline {
     agent any
     environment {
         //be sure to replace "pathanp86" with your own DockerHub username
-        DOCKER_IMAGE_NAME = "pathanp86/train-schedule"
+        DOCKER_IMAGE_NAME = "pathanp86/trainschedule:latest"
     }
     stages {
         stage('Build') {
@@ -65,13 +65,9 @@ pipeline {
                 milestone(1)
                 kubernetesDeploy(
                     kubeconfigId: 'kubeconfig',
-                    configs: 'train-schedule-kube-canary.yml',
-                    enableConfigSubstitution: true
-                )
-                kubernetesDeploy(
-                    kubeconfigId: 'kubeconfig',
                     configs: 'train-schedule-kube.yml',
                     enableConfigSubstitution: true
+                )
                 )
             }
         }
